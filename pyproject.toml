@@ -28,7 +28,7 @@ mcp = ["mcp>=1.0"]
 dev = ["pytest>=8.0", "tiktoken>=0.7"]
 
 [project.urls]
-Repository = "https://github.com/AndyWetworx/ovi-cards"
+Repository = "https://github.com/Execuspeak/ovi-cards"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ovi_cards"]
