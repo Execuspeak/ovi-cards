@@ -17,3 +17,8 @@ package-lock.json
 *.so
 .DS_Store
 Thumbs.db
+
+# Benchmark corpus contains data extracted from private projects
+benchmarks/corpus/
+benchmarks/results.json
+benchmarks/*.mjs

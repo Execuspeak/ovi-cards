@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://project-ovi.dev/schemas/ovi-card/0.1.0",
+  "$id": "https://ovi-cards.dev/schemas/ovi-card/0.1.0",
   "title": "OVI Card",
-  "description": "Orchestration Vector Interface card — the atomic unit of inter-agent communication in Project OVI.",
+  "description": "Orchestration Vector Interface card — the atomic unit of agent-to-orchestrator communication.",
   "type": "object",
   "required": [
     "schema_version",
