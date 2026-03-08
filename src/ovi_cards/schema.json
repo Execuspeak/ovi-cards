@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-ovi.dev/schemas/ovi-card/0.1.0",
+  "title": "OVI Card",
+  "description": "Orchestration Vector Interface card — the atomic unit of inter-agent communication in Project OVI.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "card_type",
+    "task_id",
+    "source_agent",
+    "timestamp",
+    "objective",
+    "outcome",
+    "key_facts",
+    "actions_taken",
+    "next_actions",
+    "artifacts",
+    "confidence",
+    "memory_suggestion"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the OVI spec this card conforms to."
+    },
+    "card_type": {
+      "type": "string",
+      "enum": ["RESULT", "ERROR", "PLAN", "PATCH", "NOTE"]
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_agent": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the producing agent. Format: {agent_type}:{model_name}"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "outcome": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "key_facts": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    },
+    "actions_taken": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    },
+    "next_actions": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "memory_suggestion": {
+      "type": "object",
+      "required": ["store", "tags"],
+      "additionalProperties": false,
+      "properties": {
+        "store": {
+          "type": "boolean"
+        },
+        "target": {
+          "type": "string",
+          "enum": ["SOP", "BEST_PRACTICE", "SHORT_TERM", "LONG_TERM", "KV"]
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        }
+      },
+      "if": {
+        "properties": { "store": { "const": true } }
+      },
+      "then": {
+        "required": ["store", "target", "tags"]
+      }
+    }
+  },
+  "if": {
+    "properties": { "card_type": { "const": "PATCH" } }
+  },
+  "then": {
+    "properties": {
+      "artifacts": { "minItems": 1 }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "card_budget": {
+    "minimal": 164,
+    "typical": 244,
+    "maximal": 376
+  },
+  "corpus_total": 59,
+  "task_samples": 17,
+  "per_card_compression": {
+    "p5": 42.7,
+    "median": 69.5,
+    "mean": 66.3,
+    "p95": 84.8
+  },
+  "orchestrator_scenarios": [
+    {
+      "label": "3 subagents, 10 steps",
+      "agents": 3,
+      "steps": 10,
+      "raw_context": 26283,
+      "ovi_context": 7320,
+      "savings_pct": 72.1
+    },
+    {
+      "label": "3 subagents, 20 steps",
+      "agents": 3,
+      "steps": 20,
+      "raw_context": 52567,
+      "ovi_context": 14640,
+      "savings_pct": 72.1
+    },
+    {
+      "label": "5 subagents, 20 steps",
+      "agents": 5,
+      "steps": 20,
+      "raw_context": 87611,
+      "ovi_context": 24400,
+      "savings_pct": 72.1
+    },
+    {
+      "label": "5 subagents, 50 steps",
+      "agents": 5,
+      "steps": 50,
+      "raw_context": 219029,
+      "ovi_context": 61000,
+      "savings_pct": 72.1
+    }
+  ]
+}
