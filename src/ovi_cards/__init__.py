@@ -15,6 +15,14 @@ from .models import (
 )
 from .validation import validate_card, validate_schema, ValidationResult
 from .verification import verify_card
+from .card_lifecycle import (
+    CardLifecycleEvent,
+    CardLifecycleManager,
+    CardLifecycleRecord,
+    CardLifecycleState,
+    create_card_lifecycle,
+    transition_card_lifecycle,
+)
 from . import builder
 
 __all__ = [
@@ -29,6 +37,12 @@ __all__ = [
     "validate_card",
     "validate_schema",
     "verify_card",
+    "CardLifecycleEvent",
+    "CardLifecycleManager",
+    "CardLifecycleRecord",
+    "CardLifecycleState",
+    "create_card_lifecycle",
+    "transition_card_lifecycle",
     "builder",
 ]
 

@@ -276,7 +276,12 @@ def verify_card(
     for check in contract.checks:
         entry = check_map.get(check.check_id)
         if entry is None:
-            checks_passed.append(check.check_id)
+            if check.severity == "HARD":
+                hard_failures.append(check.check_id)
+                failure_reasons.append(f"unknown check_id: {check.check_id}")
+            else:
+                soft_failures.append(check.check_id)
+                failure_reasons.append(f"unknown check_id: {check.check_id}")
             continue
 
         _, fn = entry

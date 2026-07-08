@@ -284,3 +284,39 @@ class TestConfidenceAdjustment:
         )
         result = verify_card(card)
         assert result.adjusted_confidence >= 0.0
+
+
+class TestUnknownCheckFailClosed:
+    def test_unknown_check_id_fails_hard(self):
+        from ovi_cards.models import VerificationCheck, VerificationContract
+        from ovi_cards.verification import DEFAULT_CONTRACTS
+
+        original = DEFAULT_CONTRACTS.get("RESULT")
+        DEFAULT_CONTRACTS["RESULT"] = VerificationContract(
+            contract_id="test-unknown-check",
+            card_type="RESULT",
+            checks=[
+                VerificationCheck(
+                    check_id="typo_nonexistent_check_xyz",
+                    description="deliberately unknown",
+                    severity="HARD",
+                ),
+            ],
+        )
+        try:
+            card = builder.result(
+                task_id="test-unknown-001",
+                source_agent="tester:gpt-4",
+                objective="Review authentication module for SQL injection vulnerabilities",
+                outcome="Found 2 SQL injection vulnerabilities in login handler, both patched",
+                key_facts=["Parameterized queries applied"],
+                actions_taken=["Patched login_handler.py"],
+                confidence=0.9,
+            )
+            result = verify_card(card)
+            assert not result.passed
+            assert "typo_nonexistent_check_xyz" in result.hard_failures
+            assert "typo_nonexistent_check_xyz" not in result.checks_passed
+        finally:
+            if original is not None:
+                DEFAULT_CONTRACTS["RESULT"] = original
